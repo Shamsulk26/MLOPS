@@ -14,7 +14,7 @@ if not HF_TOKEN:
     raise RuntimeError("HF_TOKEN not found.")
 
 api = HfApi(token=HF_TOKEN)
-repo_id = "Shamsul26/Wellness-Tourism-App"  # Using a dedicated space name avoids 404/conflict
+repo_id = "Shamsul26/MLOPS"  # Using a dedicated space name avoids 404/conflict
 repo_type = "space"
 
 # Ensure the space repository exists on Hugging Face before committing
@@ -24,6 +24,15 @@ try:
 except RepositoryNotFoundError:
     print(f"Space '{repo_id}' not found. Creating it...")
     create_repo(repo_id=repo_id, repo_type=repo_type, space_sdk="streamlit", private=False)
+
+# FIX: Change space_sdk from "streamlit" to "docker"
+    create_repo(
+        repo_id=repo_id, 
+        repo_type=repo_type, 
+        space_sdk="docker", 
+        private=False,
+        token=HF_TOKEN
+    )
 
 # Upload your deployment app files
 api.upload_folder(
