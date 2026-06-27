@@ -1,6 +1,7 @@
 import os
 import joblib
 import streamlit as st
+import pandas as pd
 from huggingface_hub import hf_hub_download
 
 # 1. Fetch the Hugging Face token dynamically from Space Secrets
@@ -14,8 +15,6 @@ model_path = hf_hub_download(
     token=hf_token            # CRITICAL: For authentication
 )
 model = joblib.load(model_path)
-
-st.title("Tourism Package Prediction")
 # ... (rest of your UI and input data logic stays the same)
 # Streamlit UI for Tourism Package
 st.title("Tourism Package Prediction")
