@@ -1,21 +1,22 @@
-import streamlit as st
-import pandas as pd
-import joblib
 import os
+import joblib
+import streamlit as st
 from huggingface_hub import hf_hub_download
 
-# Safely catch token if available for private/gated tracking
-hf_token = os.getenv("HF_TOKEN")
+# 1. Fetch the Hugging Face token dynamically from Space Secrets
+hf_token = os.environ.get("HF_TOKEN")
 
-# Explicitly add repo_type="dataset" to point to where your files live
+# 2. Download specifying repo_type="dataset" and passing the token
 model_path = hf_hub_download(
     repo_id="Shamsul26/MLOPS", 
     filename="best_tourism_model_v1.joblib",
-    repo_type="dataset",
-    token=hf_token
+    repo_type="dataset",      # CRITICAL: Since you registered it as a dataset repo
+    token=hf_token            # CRITICAL: For authentication
 )
 model = joblib.load(model_path)
 
+st.title("Tourism Package Prediction")
+# ... (rest of your UI and input data logic stays the same)
 # Streamlit UI for Tourism Package
 st.title("Tourism Package Prediction")
 st.write("Predicting the likelihood of purchasing the Wellness Tourism Package.")
